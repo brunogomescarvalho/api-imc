@@ -40,6 +40,6 @@ public class CalculoIMC
             _ => (Obesidade, "Obesidade")
         };
 
-        return new ResultadoImc(this, resultado, mensagem);
+        return new ResultadoImc(result, resultado, mensagem);
     }
 }

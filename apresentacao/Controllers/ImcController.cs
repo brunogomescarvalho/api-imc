@@ -16,11 +16,19 @@ namespace apresentacao.Controllers
 
                 var resultado = imc.ProcessarResultado();
 
-                return Ok(resultado);
+                return Ok(new
+                {
+                    sucesso = true,
+                    dados = resultado
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new
+                {
+                    sucesso = false,
+                    erro = ex.Message
+                });
             }
         }
     }

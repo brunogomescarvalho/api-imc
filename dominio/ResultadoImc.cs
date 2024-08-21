@@ -7,18 +7,18 @@ namespace dominio
 {
     public class ResultadoImc
     {
-         
+
+        public double Calculo { get; set; }
         public string Mensagem { get; set; }
         public string Resultado { get; set; }
         public string Data { get; set; }
-        public CalculoIMC Calculo { get; set; }
 
-        public ResultadoImc(CalculoIMC calculo, string resultado, string mensagem)
+        public ResultadoImc(double calculo, string resultado, string mensagem)
         {
+            Calculo = calculo;
             Mensagem = mensagem;
             Resultado = resultado;
             Data = DateTime.Now.ToLongDateString();
-            Calculo = calculo;
         }
 
     }
