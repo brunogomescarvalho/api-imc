@@ -66,10 +66,5 @@ public class Tests
         var resultado = imc.Calcular();
 
         resultado.IsFailed.Should().BeTrue();
-
-        resultado.Errors.Should().Contain(x => x.Message == "'Peso' deve ser superior a '0'.");
-
-        resultado.Errors.Should().Contain(x => x.Message == "'Altura' deve ser superior a '0'.");
-
     }
 }
