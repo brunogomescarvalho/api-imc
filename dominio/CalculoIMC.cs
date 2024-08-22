@@ -20,7 +20,7 @@ public class CalculoImc
 
         if (!result.IsValid)
         {
-            return Result.Fail(result.Errors.ToList().Select(x => x.ErrorMessage));
+            return Result.Fail(result.Errors.Select(x => x.ErrorMessage));
         }
 
         var resultadoCalculo = CalcularIMC();
