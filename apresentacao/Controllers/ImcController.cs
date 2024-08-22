@@ -10,26 +10,25 @@ namespace apresentacao.Controllers
         [HttpGet]
         public IActionResult GetImc(double peso, double altura)
         {
-            try
-            {
-                var imc = new CalculoIMC(peso, altura);
 
-                var resultado = imc.Calcular();
+            var imc = new CalculoImc(peso, altura);
 
-                return Ok(new
-                {
-                    sucesso = true,
-                    dados = resultado
-                });
-            }
-            catch (Exception ex)
+            var resultado = imc.Calcular();
+
+            if (resultado.IsFailed)
             {
                 return BadRequest(new
                 {
                     sucesso = false,
-                    erro = ex.Message
+                    erros = resultado.Reasons.Select(x => x.Message)
                 });
             }
+
+            return Ok(new
+            {
+                sucesso = true,
+                dados = resultado.Value
+            });
         }
     }
 }

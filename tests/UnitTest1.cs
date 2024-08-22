@@ -9,62 +9,67 @@ public class Tests
     [Test]
     public void DeveCalcularCorretamentePesoNormal()
     {
-        var imc = new CalculoIMC(60, 1.70);
+        var imc = new CalculoImc(60, 1.70);
 
         var resultado = imc.Calcular();
 
-        resultado.Resultado.Should().Be(20.76);
-        resultado.Mensagem.Should().Be("Parabéns, você está no seu peso ideal, continue mantendo este estilo!");
-        resultado.Classificacao.Should().Be("Peso ideal");
-        resultado.Data.Should().Be(DateTime.Now.ToLongDateString());
+        resultado.Value.Resultado.Should().Be(20.76);
+        resultado.Value.Mensagem.Should().Be("Parabéns, você está no seu peso ideal, continue mantendo este estilo!");
+        resultado.Value.Classificacao.Should().Be("Peso ideal");
+        resultado.Value.Data.Should().Be(DateTime.Now.ToLongDateString());
     }
 
     [Test]
     public void DeveCalcularCorretamentePesoAbaixo()
     {
-        var imc = new CalculoIMC(50, 1.70);
+        var imc = new CalculoImc(50, 1.70);
 
         var resultado = imc.Calcular();
 
-        resultado.Resultado.Should().Be(17.3);
-        resultado.Mensagem.Should().Be("Atenção, você está abaixo do peso ideal!.");
-        resultado.Classificacao.Should().Be("Abaixo do peso");
-        resultado.Data.Should().Be(DateTime.Now.ToLongDateString());
+        resultado.Value.Resultado.Should().Be(17.3);
+        resultado.Value.Mensagem.Should().Be("Atenção, você está abaixo do peso ideal!.");
+        resultado.Value.Classificacao.Should().Be("Abaixo do peso");
+        resultado.Value.Data.Should().Be(DateTime.Now.ToLongDateString());
     }
 
     [Test]
     public void DeveCalcularCorretamenteSobrePeso()
     {
-        var imc = new CalculoIMC(80, 1.70);
+        var imc = new CalculoImc(80, 1.70);
 
         var resultado = imc.Calcular();
 
-        resultado.Resultado.Should().Be(27.68);
-        resultado.Mensagem.Should().Be("Estamos quase lá! Faça alguns ajustes para ficar no peso ideal!");
-        resultado.Classificacao.Should().Be("Sobrepeso");
-        resultado.Data.Should().Be(DateTime.Now.ToLongDateString());
+        resultado.Value.Resultado.Should().Be(27.68);
+        resultado.Value.Mensagem.Should().Be("Estamos quase lá! Faça alguns ajustes para ficar no peso ideal!");
+        resultado.Value.Classificacao.Should().Be("Sobrepeso");
+        resultado.Value.Data.Should().Be(DateTime.Now.ToLongDateString());
     }
 
     [Test]
     public void DeveCalcularCorretamenteObesidade()
     {
-        var imc = new CalculoIMC(100, 1.70);
+        var imc = new CalculoImc(100, 1.70);
 
         var resultado = imc.Calcular();
 
-        resultado.Resultado.Should().Be(34.6);
-        resultado.Mensagem.Should().Be("Atenção, você está em um nível de obesidade.");
-        resultado.Classificacao.Should().Be("Obesidade");
-        resultado.Data.Should().Be(DateTime.Now.ToLongDateString());
+        resultado.Value.Resultado.Should().Be(34.6);
+        resultado.Value.Mensagem.Should().Be("Atenção, você está em um nível de obesidade.");
+        resultado.Value.Classificacao.Should().Be("Obesidade");
+        resultado.Value.Data.Should().Be(DateTime.Now.ToLongDateString());
     }
 
     [Test]
-    public void DeveGerarExcessao_AoNaoInformarValores_MaioresQueZero()
+    public void DeveRetornarErro_AoInformarValores_MenoresqueZero()
     {
-        var imc = new CalculoIMC(0, -1);
+        var imc = new CalculoImc(0, -1);
 
-        Action act = () => imc.Calcular();
+        var resultado = imc.Calcular();
 
-        act.Should().Throw<Exception>().WithMessage("Informe o peso e a altura com valor maior que zero para efetuar o cálculo");
+        resultado.IsFailed.Should().BeTrue();
+
+        resultado.Errors.Should().Contain(x => x.Message == "'Peso' deve ser superior a '0'.");
+
+        resultado.Errors.Should().Contain(x => x.Message == "'Altura' deve ser superior a '0'.");
+
     }
 }

@@ -1,25 +1,31 @@
-﻿namespace dominio;
-public class CalculoIMC
-{
-    private double Peso { get; set; }
-    private double Altura { get; set; }
+﻿using FluentResults;
 
-    public CalculoIMC(double peso, double altura)
+namespace dominio;
+public class CalculoImc
+{
+    public double Peso { get; private set; }
+    public double Altura { get; private set; }
+
+    public CalculoImc(double peso, double altura)
     {
         this.Altura = altura;
         this.Peso = peso;
     }
 
-    public ClassificadorImc Calcular()
+    public Result<ClassificadorImc> Calcular()
     {
-        if (Peso <= 0 || Altura <= 0)
+        var validador = new Validador();
+
+        var result = validador.Validate(this);
+
+        if (!result.IsValid)
         {
-            throw new Exception("Informe o peso e a altura com valor maior que zero para efetuar o cálculo");
+            return Result.Fail(result.Errors.ToList().Select(x => x.ErrorMessage));
         }
 
-        var result = CalcularIMC();
+        var resultadoCalculo = CalcularIMC();
 
-        return ClassificarIMC(result);
+        return Result.Ok(ClassificarIMC(resultadoCalculo));
     }
 
     private double CalcularIMC()
