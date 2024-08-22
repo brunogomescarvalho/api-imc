@@ -10,7 +10,7 @@ public class CalculoIMC
         this.Peso = peso;
     }
 
-    public ClassificadorImc ProcessarResultado()
+    public ClassificadorImc Calcular()
     {
         if (Peso <= 0 || Altura <= 0)
         {

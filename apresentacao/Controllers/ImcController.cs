@@ -14,7 +14,7 @@ namespace apresentacao.Controllers
             {
                 var imc = new CalculoIMC(peso, altura);
 
-                var resultado = imc.ProcessarResultado();
+                var resultado = imc.Calcular();
 
                 return Ok(new
                 {

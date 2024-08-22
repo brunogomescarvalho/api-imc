@@ -11,7 +11,7 @@ public class Tests
     {
         var imc = new CalculoIMC(60, 1.70);
 
-        var resultado = imc.ProcessarResultado();
+        var resultado = imc.Calcular();
 
         resultado.Resultado.Should().Be(20.76);
         resultado.Mensagem.Should().Be("Parabéns, você está no seu peso ideal, continue mantendo este estilo!");
@@ -24,7 +24,7 @@ public class Tests
     {
         var imc = new CalculoIMC(50, 1.70);
 
-        var resultado = imc.ProcessarResultado();
+        var resultado = imc.Calcular();
 
         resultado.Resultado.Should().Be(17.3);
         resultado.Mensagem.Should().Be("Atenção, você está abaixo do peso ideal!.");
@@ -37,7 +37,7 @@ public class Tests
     {
         var imc = new CalculoIMC(80, 1.70);
 
-        var resultado = imc.ProcessarResultado();
+        var resultado = imc.Calcular();
 
         resultado.Resultado.Should().Be(27.68);
         resultado.Mensagem.Should().Be("Estamos quase lá! Faça alguns ajustes para ficar no peso ideal!");
@@ -50,7 +50,7 @@ public class Tests
     {
         var imc = new CalculoIMC(100, 1.70);
 
-        var resultado = imc.ProcessarResultado();
+        var resultado = imc.Calcular();
 
         resultado.Resultado.Should().Be(34.6);
         resultado.Mensagem.Should().Be("Atenção, você está em um nível de obesidade.");
@@ -63,7 +63,7 @@ public class Tests
     {
         var imc = new CalculoIMC(0, -1);
 
-        Action act = () => imc.ProcessarResultado();
+        Action act = () => imc.Calcular();
 
         act.Should().Throw<Exception>().WithMessage("Informe o peso e a altura com valor maior que zero para efetuar o cálculo");
     }
